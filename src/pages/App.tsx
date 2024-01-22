@@ -22,7 +22,7 @@ export function Csr() {
     </html>
     );
 }
-/*
+/* 
         <script type="module" src="/public/static/main.js"></script>
         {(process.env.NODE_ENV === "develop") ? (
             <link href="/static/style.css" rel="stylesheet" /> 
