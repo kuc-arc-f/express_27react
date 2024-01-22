@@ -1,8 +1,9 @@
 {
   "scripts": {
     "start": "ts-node src/index.ts",
-    "dev": "ts-node-dev --respawn src/index.ts",
+    "dev": "NODE_ENV=develop ts-node src/index.ts",
     "build": "rimraf dist && tsc",
+    "test": "ts-node src/index.ts",
     "deploy": "npm run build && vercel --prod"
   },
   "devDependencies": {

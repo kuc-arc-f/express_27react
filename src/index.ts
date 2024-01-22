@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 //
 import {Csr} from './pages/App';
 const routes = require('./routes/index');
-import testRouter from './routes/test';
+import testRouter from './routes/test'; 
 import commonRouter from './routes/common';
 //
 require('dotenv').config();
