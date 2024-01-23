@@ -31,6 +31,15 @@ yarn build
 * ./ReadmeFront.md
 
 ***
+### Setup
+* .env
+* option: API_KEY
+
+```
+API_KEY="123"
+```
+
+***
 ### blog
 
 https://zenn.dev/knaka0209/scraps/44a812684ddbf4
