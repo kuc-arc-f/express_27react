@@ -3,29 +3,40 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 import { renderToString } from 'react-dom/server';
-
-app.use(cors())
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 //
 import {Csr} from './pages/App';
 const routes = require('./routes/index');
+import Common from './lib/Common';
 import testRouter from './routes/test'; 
 import commonRouter from './routes/common';
 //
 require('dotenv').config();
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+//
+const errorObj = {ret: "NG", messase: "Error"};
+app.use(function(req: any, res: any, next: any){
+  const body = req.body;
+//console.log(body);
+  const valid = Common.validApiKey(body);
+  if(!valid) {
+    errorObj.messase="Error, Common.validApiKey=false"
+    console.log("Error, Common.validApiKey=false");
+    res.json(errorObj);
+  } else {
+    next();
+  }
+});
 // route
 app.use('/', routes);
 app.use('/api/test', testRouter);
 app.use('/api/common', commonRouter);
-
+//
 app.post('/api/post1', (req: any, res: any) => {
   try {
-    //
 console.log(req.body);
     res.send({ name: "ok, /api/test1" });
   } catch (error) {
@@ -48,7 +59,6 @@ app.get('/*', (req: any, res: any) => {
     res.sendStatus(500);
   }
 });
-
 
 //start
 const PORT = 4000;
