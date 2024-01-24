@@ -1,29 +1,42 @@
 import {useState, useEffect}  from 'react';
 import { Link } from 'react-router-dom';
 import Head from '../components/Head'
+import HttpCommon from './lib/HttpCommon';
+
 //
 let pageItems: any[] = [];
 //
 function Page() {
   const [updatetime, setUpdatetime] = useState<string>("");
   //
+  useEffect(() => {
+    (async () => {
+        getList();
+    })()
+  }, []);  
+  /**
+   *
+   * @param
+   *
+   * @return
+   */
+  const getList = async function() {
+    try{
+console.log("#getList");
+      const item  = {
+        "userId": 0,
+      }
+      const json = await HttpCommon.post(item, "/test/get_list")
+      pageItems = json.data;
+      console.log(json.data);
+      setUpdatetime(new Date().toString());
+    } catch (e) {
+        console.error(e);
+    } 
+  }
+  //
   const testProc = async function(){
-    console.log("#testProc");
-    // /api/test/test1
-    const item  = {
-      "api_url": "/api/test/test1",
-      "userId": 0,
-    }
-    const body: any = JSON.stringify(item);		
-    const res = await fetch("/api/common/send_post", {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},      
-      body: body
-    });
-    const json = await res.json()
-    pageItems = json.data;
-    setUpdatetime(new Date().toString());
-console.log(json.data); 
+    getList();
   }
   //
   return (
